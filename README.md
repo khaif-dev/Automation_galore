@@ -9,7 +9,8 @@ Automation/
 ├── notebooks/
 │   ├── raster_data_profiler.ipynb
 │   ├── tabular_data_profiler.ipynb
-│   └── vector_data_converter.ipynb
+│   ├── vector_data_converter.ipynb
+│   └── vector_data_profiler.ipynb
 ├── data/
 │   ├── Kisumu.*
 │   ├── Mombasa.*
@@ -41,6 +42,18 @@ Converts ESRI Shapefiles (.shp) to OGC GeoPackage (.gpkg) format.
 **Input:** `data/*.shp`  
 **Output:** `Export/*.gpkg`
 
+### Vector Data Profiler
+
+Profiles vector datasets (SHP, GeoPackage, GeoJSON, KML) and exports a multi-sheet Excel report containing:
+- Dataset summary (records, fields, CRS, geometry types)
+- Field profile (type, missing, unique, duplicates)
+- Numeric summary (min, max, mean, median, std, zeros, negatives)
+- Categorical summary (value counts and percentages)
+- Spatial summary (geometry types, null/empty/invalid/duplicate geometries, bounding box)
+
+**Input:** Place files in `data/raw/` folder  
+**Output:** `reports/<filename>_dataprofile.xlsx`
+
 ### Tabular Data Profiler
 
 Profiles tabular datasets (CSV, XLSX, XLS) and exports a multi-sheet Excel report containing:
@@ -69,7 +82,7 @@ Uses reservoir sampling for memory-efficient median computation on large rasters
 
 End-to-end pipeline for cleaning and validating school academic records.
 
-### Stage 1 — PDF to Excel Conversion
+### Stage 1. PDF to Excel Conversion
 
 **Notebook:** `Shamiri/notebooks/01_convert_pdf_to_xlsx.ipynb`
 
@@ -81,7 +94,7 @@ Batch converts tabular PDF files to `.xlsx` workbooks. Extracts all tables per p
 **Input:** `Shamiri/data/Inputs/*.pdf`  
 **Output:** `Shamiri/data/Inputs/<filename>.xlsx`
 
-### Stage 2 — Add School Name and Shamiri ID
+### Stage 2. Add School Name and Shamiri ID
 
 **Notebook:** `Shamiri/notebooks/02_add_shamiri_ID.ipynb`
 
@@ -94,7 +107,7 @@ Prepares datasets for analysis by:
 **Input:** `Shamiri/data/Inputs/*.xlsx`  
 **Output:** `Shamiri/data/academic_QA_Exports/*.xlsx`
 
-### Stage 3 — Survey QA
+### Stage 3. Survey QA
 
 **Notebook:** `Shamiri/notebooks/Survey_QA.ipynb`
 
@@ -111,7 +124,7 @@ Validates survey data and generates Excel reports with the following checks:
 Common dependencies across notebooks:
 
 ```bash
-pip install pandas numpy rasterio geopandas pdfplumber openpyxl
+pip install pandas geopandas numpy rasterio geopandas pdfplumber openpyxl
 ```
 
 ## Notes
